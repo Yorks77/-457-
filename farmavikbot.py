@@ -12,10 +12,10 @@ class FarmIrisMod(loader.Module):
 	"""Для автоматического фарминга монет в авике"""
 	strings = {
 		'name': 'avikbot',
-		'farmon': '<i>✅Отложенка создана, автофарминг запущен, всё начнётся через 20 секунд...</i>',
-		'farmon_already': '<i>Уже запущено</i>',
-		'farmoff': '<i>❌Автофарминг остановлен.\n☢️Надюпано:</i> <b>%coins% i¢</b>',
-		'farm': '<i>☢️Надюпано:</i> <b>%coins% i¢</b>',
+		'avikon': '<i>✅Отложенка создана, автофарминг запущен, всё начнётся через 20 секунд...</i>',
+		'avikon_already': '<i>Уже запущено</i>',
+		'avikoff': '<i>❌Автофарминг остановлен.\n☢️Надюпано:</i> <b>%coins% i¢</b>',
+		'todo': '<i>☢️Надюпано:</i> <b>%coins% i¢</b>',
 	}
 	
 	def __init__(self):
@@ -45,7 +45,7 @@ class FarmIrisMod(loader.Module):
 	async def farmcmd(self, message):
 		"""Вывод кол-ва коинов, добытых этим модулем"""
 		coins = self.db.get(self.name, "coins", 0)
-		await message.edit(self.strings['farm'].replace("%coins%", str(coins)))
+		await message.edit(self.strings['todo'].replace("%coins%", str(coins)))
 	
 	async def watcher(self, event):
 		if not isinstance(event, Message): return
