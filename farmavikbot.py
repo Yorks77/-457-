@@ -8,7 +8,7 @@ from telethon import functions
 from telethon.tl.types import Message
 
 @loader.tds
-class FarmIrisMod(loader.Module):
+class FarmAvikMod(loader.Module):
 	"""Для автоматического фарминга монет в авике"""
 	strings = {
 		'name': 'avikbot',
@@ -25,12 +25,12 @@ class FarmIrisMod(loader.Module):
 		self.client = client
 		self.db = db
 		self.myid = (await client.get_me()).id
-		self.iris = 905604193
+		self.avik = 905604193
 		
 	async def avikoncmd(self, message):
 		"""Запустить автофарминг"""
 		status = self.db.get(self.name, "status", False)
-		if status: return await message.edit(self.strings['farmon_already'])
+		if status: return await message.edit(self.strings['avikon_already'])
 		self.db.set(self.name, "status", True)
 		await self.client.send_message(self.iris, "!бонускости 6", schedule=timedelta(seconds=20))
 		await message.edit(self.strings['avikon'])
@@ -50,12 +50,12 @@ class FarmIrisMod(loader.Module):
 	async def watcher(self, event):
 		if not isinstance(event, Message): return
 		chat = utils.get_chat_id(event)
-		if chat != self.iris: return
+		if chat != self.avik: return
 		status = self.db.get(self.name, 'status', False)
 		if not status: return
 		if event.raw_text == "!бонускости 6":
-			return await self.client.send_message(self.iris, "!бонускости 6", schedule=timedelta(minutes=random.randint(1, 20)))
-		if event.sender_id != self.iris: return
+			return await self.client.send_message(self.avik, "!бонускости 6", schedule=timedelta(minutes=random.randint(1, 20)))
+		if event.sender_id != self.avik: return
 		if "Следующий" in event.raw_text:
 			args = [int(x) for x in event.raw_text.split() if x.isnumeric()]
 			randelta = random.randint(20, 60)
@@ -63,8 +63,8 @@ class FarmIrisMod(loader.Module):
 			elif len(args) == 3: delta = timedelta(minutes=args[1], seconds=args[2]+randelta)
 			elif len(args) == 2: delta = timedelta(seconds=args[1]+randelta)
 			else: return
-			sch = (await self.client(functions.messages.GetScheduledHistoryRequest(self.iris, 1488))).messages
-			await self.client(functions.messages.DeleteScheduledMessagesRequest(self.iris, id=[x.id for x in sch]))
+			sch = (await self.client(functions.messages.GetScheduledHistoryRequest(self.avik, 1488))).messages
+			await self.client(functions.messages.DeleteScheduledMessagesRequest(self.avik, id=[x.id for x in sch]))
 			return await self.client.send_message(self.iris, '!бонускости 6', schedule=delta)
 		if "Ваш" in event.raw_text or 'Ваш' in event.raw_text:
 			args = event.raw_text.split()
