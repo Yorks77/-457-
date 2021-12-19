@@ -14,7 +14,7 @@ class MegaMozgMod(loader.Module):
         'pref': '<b>[MegaMozg]</b> ',
         'need_arg': '{}Нужен аргумент',
         'status': '{}{}',
-        'on': '{}Режим бота включён,
+        'on': '{}Режим бота включён',
         'off': '{}Режим бота выключен',
         
     }
