@@ -27,7 +27,7 @@ class FarmIrisMod(loader.Module):
 		self.myid = (await client.get_me()).id
 		self.iris = 905604193
 		
-	async def farmoncmd(self, message):
+	async def avikoncmd(self, message):
 		"""Запустить автофарминг"""
 		status = self.db.get(self.name, "status", False)
 		if status: return await message.edit(self.strings['farmon_already'])
@@ -35,14 +35,14 @@ class FarmIrisMod(loader.Module):
 		await self.client.send_message(self.iris, "!бонускости 6", schedule=timedelta(seconds=20))
 		await message.edit(self.strings['avikon'])
 		
-	async def farmoffcmd(self, message):
+	async def avikoffcmd(self, message):
 		"""Остановить автофарминг"""
 		self.db.set(self.name, 'status', False)
 		coins = self.db.get(self.name, 'coins', 0)
 		if coins: self.db.set(self.name, 'coins', 0)
 		await message.edit(self.strings['avikoff'].replace("%coins%", str(coins)))
 		
-	async def farmcmd(self, message):
+	async def todocmd(self, message):
 		"""Вывод кол-ва коинов, добытых этим модулем"""
 		coins = self.db.get(self.name, "coins", 0)
 		await message.edit(self.strings['todo'].replace("%coins%", str(coins)))
