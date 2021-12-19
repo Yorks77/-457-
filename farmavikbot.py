@@ -32,7 +32,7 @@ class FarmAvikMod(loader.Module):
 		status = self.db.get(self.name, "status", False)
 		if status: return await message.edit(self.strings['avikon_already'])
 		self.db.set(self.name, "status", True)
-		await self.client.send_message(self.iris, "!бонускости 6", schedule=timedelta(seconds=20))
+		await self.client.send_message(self.avik, "!бонускости 6", schedule=timedelta(seconds=20))
 		await message.edit(self.strings['avikon'])
 		
 	async def avikoffcmd(self, message):
